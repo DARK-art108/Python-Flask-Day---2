@@ -8,5 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     db = sqlite3.connect('lecture.db')
-    rows = db.execute("SELECT * FROM registrants")
+    cu = db.cursor()
+    rows = cu.execute("SELECT * FROM registrants")
+    cu.close() # Use cu.commit() before close() if you inserted any data
     return render_template("index.html", rows=rows)
